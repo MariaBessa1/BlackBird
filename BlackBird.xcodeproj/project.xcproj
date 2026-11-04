@@ -11,8 +11,21 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "BlackBird", "target-membership": [ "BlackBird" ] },
     {
+      "kind": "folder",
+      "path": "BlackBird",
+      "target-membership": [
+        "BlackBird",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "BlackBird",
+          "exclusions": [
+            "Info.plist",
+          ],
+        },
+      ],
+    }, {
       "kind": "group",
       "name": "Products",
       "children": [
