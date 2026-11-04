@@ -11,8 +11,21 @@
     ],
   },
   "files": [
-    { "kind": "folder", "path": "BlackBird", "target-membership": [ "BlackBird" ] },
     {
+      "kind": "folder",
+      "path": "BlackBird",
+      "target-membership": [
+        "BlackBird",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "BlackBird",
+          "exclusions": [
+            "Info.plist",
+          ],
+        },
+      ],
+    }, {
       "kind": "group",
       "name": "Products",
       "children": [
@@ -44,6 +57,7 @@
         "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone": "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
+        "IPHONEOS_DEPLOYMENT_TARGET": "27.0",
         "LD_RUNPATH_SEARCH_PATHS": [
           "$(inherited)",
           "@executable_path/Frameworks",
