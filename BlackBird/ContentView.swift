@@ -11,13 +11,13 @@ struct ContentView: View {
     var body: some View {
         TabView{
             Tab {
-                UserProfileScreen()
+                HomeScreen()
             } label: {
                 Label("Início", image: "BirdHouseIcon")
             }
             
             Tab("Perfil", systemImage: "person.crop.circle.fill") {
-                HomeScreen()
+                UserProfileScreen()
             }
         }
         .tint(Color.principalYellow)

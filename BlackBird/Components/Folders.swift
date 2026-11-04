@@ -7,59 +7,101 @@
 
 import SwiftUI
 
-struct Folders: View {
+struct Folders<Destination: View>: View {
+    var destination: Destination
+    var icon: String
+    var iconBack: String
     var colorFolder: Color
+    var frontFolder: String
+    var colorInformations: Color
+    var text: String
     
     var body: some View {
-        ZStack {
-            Image(systemName: "calendar")
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(.white)
-                .padding(60)
-                .padding(.bottom, 30)
-                .background (
-                    RoundedRectangle(cornerRadius: 70)
-                        .foregroundStyle(colorFolder)
-                )
-            Image(systemName: "calendar")
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(.white.opacity(0.5))
-                .padding(50)
-                .padding(.bottom, 30)
-                .rotationEffect(.degrees(5))
-        }
-        .overlay (
-            ZStack {
-                VStack {
-                    Spacer()
-                    Image("FrontYellowFolder")
+        NavigationLink(destination: destination) {
+            GeometryReader { geometry in
+                let size = geometry.size.width
+                
+                ZStack {
+                    RoundedRectangle(cornerRadius: size * 0.22)
+                        .fill(colorFolder)
+                        .frame(width: size, height: size)
+                    
+                    Image(systemName: iconBack)
                         .resizable()
                         .scaledToFit()
-                        .overlay {
-                            Rectangle()
-                                .fill(.thickMaterial)
-                                .mask {
-                                    Image("FrontYellowFolder")
+                        .foregroundStyle(.white)
+                        .padding(size * 0.16)
+                        .padding(.bottom, size * 0.1)
+                    
+                    Image(systemName: iconBack)
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(.white.opacity(0.25))
+                        .padding(size * 0.13)
+                        .padding(.bottom, size * 0.1)
+                        .rotationEffect(.degrees(5))
+                }
+                .frame(width: size, height: size)
+                .overlay (
+                    ZStack {
+                        VStack {
+                            Spacer()
+                            Image(frontFolder)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: size)
+                                .overlay {
+                                    Rectangle()
+                                        .fill(.thickMaterial)
+                                        .mask {
+                                            Image(frontFolder)
+                                                .resizable()
+                                                .scaledToFit()
+                                        }
+                                    Rectangle()
+                                        .fill(.thickMaterial)
+                                        .mask {
+                                            Image(frontFolder)
+                                                .resizable()
+                                                .scaledToFit()
+                                        }
+                                }
+                                .overlay {
+                                    Image(frontFolder)
                                         .resizable()
                                         .scaledToFit()
                                 }
-        
-                            
+                                .overlay {
+                                    HStack {
+                                        VStack(alignment: .leading) {
+                                            Image(systemName: icon)
+                                                .font(.system(size: size * 0.11))
+                                                .minimumScaleFactor(0.7)
+                                                .foregroundStyle(colorInformations)
+                                            
+                                            Spacer()
+                                            
+                                            Text(text)
+                                                .font(.system(size: size * 0.12))
+                                                .fontWeight(.medium)
+                                                .minimumScaleFactor(0.7)
+                                                .foregroundStyle(colorInformations)
+                                        }
+                                        .padding(size * 0.09)
+                                        Spacer()
+                                    }
+                                }
                         }
-                        .overlay {
-                                Image("FrontYellowFolder")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .opacity(0.25)
-                            }
-                }
+                    }
+                        .frame(width: size, height: size)
+                        .environment(\.colorScheme, .light)
+                )
             }
-        )
+            .aspectRatio(1, contentMode: .fit)
+        }
     }
 }
 
 #Preview {
-    Folders(colorFolder: .yellowFolder)
+    Folders(destination: UserProfileScreen(), icon: "calendar", iconBack: "calendar", colorFolder: .yellowFolder, frontFolder: "FrontYellowFolder", colorInformations: .yellowDetailsFolder, text: "Cronograma")
 }

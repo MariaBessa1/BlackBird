@@ -8,16 +8,39 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    var body: some View {
-        NavigationStack {
+    
+let columns: [GridItem] = [
+    GridItem(.flexible(), spacing: 12),
+    GridItem(.flexible(), spacing: 12),
+]
+    
+    
+var body: some View {
+    NavigationStack {
+        ZStack {
+            Color.background
+            .ignoresSafeArea()
+            
             VStack {
+                LazyVGrid(columns: columns, spacing: 12) {
+                    Folders(destination: TimelineScreen(), icon: "calendar", iconBack: "calendar", colorFolder: .yellowFolder, frontFolder: "FrontYellowFolder", colorInformations: .yellowDetailsFolder, text: "Cronograma")
+                    
+                    Folders(destination: ActivitiesScreen(), icon: "list.bullet.clipboard.fill", iconBack: "text.page.fill", colorFolder: .blueFolder, frontFolder: "FrontBlueFolder", colorInformations: .blueDetailsFolder, text: "Atividades")
+                    
+                    Folders(destination: FrequencyScreen(), icon: "clock.fill", iconBack: "alarm.fill", colorFolder: .greenFolder, frontFolder: "FrontGreenFolder", colorInformations: .greenDetailsFolder, text: "Frequência")
+                    
+                    Folders(destination: NotesScreen(), icon: "star.fill", iconBack: "trophy.fill", colorFolder: .redFolder, frontFolder: "FrontRedFolder", colorInformations: .redDetailsFolder, text: "Notas")
+                }
+                .navigationTitle("Olá, Fulano.")
                 
+                Spacer()
             }
-            .navigationTitle("Olá, Fulano.")
+            .padding(20)
+            
         }
     }
+    }
 }
-
 #Preview {
     HomeScreen()
 }
