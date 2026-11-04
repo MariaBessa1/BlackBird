@@ -9,13 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView{
+            Tab {
+                UserProfileScreen()
+            } label: {
+                Label("Início", image: "BirdHouseIcon")
+            }
+            
+            Tab("Perfil", systemImage: "person.crop.circle.fill") {
+                HomeScreen()
+            }
         }
-        .padding()
+        .tint(Color.principalYellow)
+        .navigationBarBackButtonHidden()
     }
 }
 
