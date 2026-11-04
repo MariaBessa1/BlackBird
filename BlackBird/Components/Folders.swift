@@ -58,13 +58,6 @@ struct Folders<Destination: View>: View {
                                                 .resizable()
                                                 .scaledToFit()
                                         }
-                                    Rectangle()
-                                        .fill(.thickMaterial)
-                                        .mask {
-                                            Image(frontFolder)
-                                                .resizable()
-                                                .scaledToFit()
-                                        }
                                 }
                                 .overlay {
                                     Image(frontFolder)
