@@ -8,12 +8,29 @@
 import SwiftUI
 
 struct TimelineScreen: View {
+    
+    @State private var selectedDate = Date()
+    
     var body: some View {
         ZStack {
             Color.background
             .ignoresSafeArea()
+            
+            VStack (alignment: .leading, spacing: 40){
+                SelectorDates(selectedDate: $selectedDate)
+                
+                DaysCarousel(selectedDate: $selectedDate)
+
+                ScrollView(.vertical, showsIndicators: false) {
+                    ClassTimeline(
+                        classes: ClassMock.classes
+                    )
+                }
+              
+                
+            }
         }
-        .navigationTitle("Cronograma")
+        .navigationTitle("Cronograma de aulas")
         .toolbarTitleDisplayMode(.inline)
     }
 }
