@@ -11,8 +11,8 @@ struct CardNotas: View {
     let nomeMateria: String
     let atividades: [AtividadeNota]
     
-    var body: some View{
-        VStack(alignment: .leading, spacing: 16){
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
             HStack {
                 Text(nomeMateria)
                     .font(.title3)
@@ -21,9 +21,9 @@ struct CardNotas: View {
                 Image(systemName: "chevron.right")
                     .foregroundColor(.secondary)
             }
-            
+             
             Divider()
-            
+             
             ForEach(atividades) { item in
                 HStack {
                     Text(item.nome)
@@ -32,13 +32,13 @@ struct CardNotas: View {
                     
                     Spacer()
                     
-                    Text(item.nota)
+                    // Formata o Double para texto (ex: exibe 7 ou 7.5)
+                    Text(item.nota, format: .number.precision(.fractionLength(0...1)))
                         .font(.body)
                         .fontWeight(.regular)
                         .foregroundColor(.secondary)
                 }
             }
-            
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -51,9 +51,9 @@ struct CardNotas: View {
     CardNotas(
         nomeMateria: "Antropologia Aplicada a Fatores Sociais no Egito",
         atividades: [
-            AtividadeNota(nome: "Prova 1", nota: "7 / 10"),
-            AtividadeNota(nome: "ADO 1", nota: "7 / 10"),
-            AtividadeNota(nome: "PI II", nota: "6 / 10")
+            AtividadeNota(nome: "Prova 1", nota: 7.0),
+            AtividadeNota(nome: "ADO 1", nota: 7.0),
+            AtividadeNota(nome: "PI II", nota: 6.0)
         ]
     )
     .padding()

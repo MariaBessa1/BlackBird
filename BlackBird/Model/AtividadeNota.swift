@@ -9,6 +9,6 @@ import Foundation
 struct AtividadeNota: Identifiable {
     let id = UUID()
     let nome: String
-    let nota: String
+    let nota: Double
 }
 
