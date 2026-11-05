@@ -4,6 +4,8 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>BonaNova-Regular.ttf</string>
+		<string>BonaNovaSC-Regular.ttf</string>
 		<string>DMSans-Bold.ttf</string>
 		<string>DMSans-SemiBold.ttf</string>
 		<string>DMSans-Thin.ttf</string>
