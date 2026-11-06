@@ -13,7 +13,7 @@ struct FrequencyScreen: View {
             Color.background
             .ignoresSafeArea()
             
-            Text("Área em Construção")
+            Image("InConstruction")
         }
     }
 }

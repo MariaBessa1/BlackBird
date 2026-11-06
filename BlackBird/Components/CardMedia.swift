@@ -40,7 +40,7 @@ struct CardMedia: View {
                     Text("\(media.formatted(.number.precision(.fractionLength(0...1))))")
                         .font(.custom("DMSans-Bold", size: 64, relativeTo: .largeTitle))
 
-                    Text("Sua média")
+                    Text("Sua média é")
                         .font(.custom("DMSans-Bold", size: 24, relativeTo: .title3))
                 }
                 .foregroundStyle(Color(red: 0.12, green: 0.12, blue: 0.12))

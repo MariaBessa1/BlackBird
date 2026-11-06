@@ -55,10 +55,12 @@ struct NotesScreen: View {
         .navigationTitle("Notas")
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
+            ToolbarItem(placement: .confirmationAction)
+                {
                 Button {
                 } label: {
-                    Image(systemName: "line.3.horizontal.decrease")
+                    Image(systemName:
+                            "line.3.horizontal.decrease")
                 }
                 .buttonStyle(.glassProminent)
                 .tint(Color.accent)
