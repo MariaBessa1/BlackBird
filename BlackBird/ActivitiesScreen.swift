@@ -13,7 +13,7 @@ struct ActivitiesScreen: View {
             Color.background
             .ignoresSafeArea()
             
-            Text("Área em Construção")
+            Image("InConstruction")
         }
     }
 }

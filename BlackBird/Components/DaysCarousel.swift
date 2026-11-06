@@ -64,7 +64,7 @@ private func dayItem(_ date: Date) -> some View {
         selectedDate = date
     } label: {
 
-        VStack(spacing: 14) {
+        VStack(spacing: 10) {
 
             Text(date.formatted(
                 .dateTime
@@ -72,7 +72,7 @@ private func dayItem(_ date: Date) -> some View {
                 .locale(Locale(identifier: "pt_BR"))
                 )
             )
-            .font(.title2)
+            .font(.title3)
             .foregroundStyle(
                 isSelected ? .black : .secondary
             )

@@ -16,7 +16,7 @@ struct TimelineScreen: View {
             Color.background
             .ignoresSafeArea()
             
-            VStack (alignment: .leading, spacing: 40){
+            VStack (alignment: .leading, spacing: 35){
                 SelectorDates(selectedDate: $selectedDate)
                 
                 DaysCarousel(selectedDate: $selectedDate)
