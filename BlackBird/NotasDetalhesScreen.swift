@@ -42,6 +42,8 @@ struct NotasDetalhesScreen: View {
                 .padding(24)
             }
         }
+        .navigationTitle("Notas")
+        .toolbarTitleDisplayMode(.inline)
     }
 }
 
