@@ -33,7 +33,7 @@ struct CardNotas: View {
                     Spacer()
                     
                     // Formata o Double para texto (ex: exibe 7 ou 7.5)
-                    Text(item.nota, format: .number.precision(.fractionLength(0...1)))
+                    Text(item.nota, format: .number.precision(.fractionLength(0...2)))
                         .font(.body)
                         .fontWeight(.regular)
                         .foregroundColor(.secondary)
