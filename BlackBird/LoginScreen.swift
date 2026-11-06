@@ -8,8 +8,12 @@
 import SwiftUI
 
 struct LoginScreen: View {
+    
+    var onLogin: () -> Void
+    @State var email: String = ""
+    @State var senha: String = ""
+    
     var body: some View {
-        @State var text: String = ""
         
         NavigationStack{
             ZStack{
@@ -18,7 +22,7 @@ struct LoginScreen: View {
                 
                 VStack{
                     Text("BlackBird")
-                        .font(.custom ("BonaNova-Regular", size: 30))
+                        .font(.custom ("BonaNovaSC-Regular", size: 30))
                         .foregroundStyle(.principalYellow)
                         .padding(.top, 40)
                     
@@ -26,54 +30,78 @@ struct LoginScreen: View {
                     
                     Image("Jubileu")
                     
-                    TextField("Digite seu e-mail educacional", text: $text)
-                        .font(.custom ("DMSans-Regular", size: 13))
-                        .foregroundColor(.secondary)
-                        .background(
-                            RoundedRectangle(cornerRadius: 40)
-                                .foregroundStyle(.quinary)
-                                .frame(width: 350, height: 40)
-                            
-                        ).padding(.horizontal, 40)
-                        .padding(.bottom)
+                    Spacer()
                     
-                    TextField("Senha", text: $text)
-                        .font(.custom ("DMSans-Regular", size: 13))
-                        .foregroundColor(.secondary)
-                        .background(
-                            RoundedRectangle(cornerRadius: 40)
-                                .foregroundStyle(.quinary)
-                                .frame(width: 350, height: 40)
-                            
-                        ).padding(.horizontal, 40)
-                        .padding(.bottom,40)
+                    // Campo de e-mail
+                    VStack(alignment: .leading, spacing: 8) {
+                        
+                        Text("E-mail")
+                            .font(.custom("DMSans-SemiBold", size: 17, relativeTo: .subheadline))
+                            .foregroundStyle(.primary)
+                        
+                        TextField("Digite seu e-mail educacional", text: $email)
+                            .font(.custom("DMSans-Regular", size: 17, relativeTo: .body))
+                            .padding(.horizontal, 16)
+                            .frame(height: 60)
+                            .background(
+                                RoundedRectangle(cornerRadius: 40)
+                                    .foregroundStyle(.quinary)
+                            )
+                    }
                     
-                    NavigationLink{
-                        HomeScreen()
+                    // Campo de senha
+                    VStack(alignment: .leading, spacing: 8) {
+                        
+                        Text("Senha")
+                            .font(.custom("DMSans-SemiBold", size: 17, relativeTo: .subheadline))
+                            .foregroundStyle(.primary)
+                        
+                        SecureField("Digite sua senha", text: $senha)
+                            .font(.custom("DMSans-Regular", size: 17, relativeTo: .body))
+                            .padding(.horizontal, 16)
+                            .frame(height: 60)
+                            .background(
+                                RoundedRectangle(cornerRadius: 40)
+                                    .foregroundStyle(.quinary)
+                            )
+                    }
+                    
+                    Spacer()
+                    
+                    //                    NavigationLink{
+                    //                        MainTabView()
+                    //                    } label: {
+                    //                        Text("Entrar")
+                    //                            .font(.custom ("DMSans-Bold", size: 16))
+                    //                            .foregroundStyle(.principalBlack)
+                    //                            .background(
+                    //                                RoundedRectangle(cornerRadius: 40)
+                    //                                    .foregroundStyle(.principalYellow)
+                    //                                    .frame(width: 200, height: 60)
+                    //                            )
+                    //                    }
+                    //                    .padding(24)
+                    
+                    Button {
+                        onLogin()
                     } label: {
                         Text("Entrar")
-                            .font(.custom ("DMSans-Bold", size: 16))
+                            .font(.custom("DMSans-Bold", size: 16, relativeTo: .body))
                             .foregroundStyle(.principalBlack)
                             .background(
                                 RoundedRectangle(cornerRadius: 40)
                                     .foregroundStyle(.principalYellow)
-                                    .frame(width: 200, height: 40)
+                                    .frame(width: 200, height: 60)
                             )
-                        
-                    }.padding(.bottom,40)
-                    
-                    Text("Esqueci minha senha")
-                        .font(.custom("DMSans-Regular", size: 13))
-                        .foregroundStyle(.secondary)
-                    
-                    Spacer()
-                    
+                    }
+                    .padding(24)
                 }
+                .padding(40)
             }
         }
     }
 }
 
 #Preview {
-    LoginScreen()
+    LoginScreen(onLogin: {})
 }

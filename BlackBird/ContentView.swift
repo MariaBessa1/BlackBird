@@ -8,23 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var usuarioLogado = false
+    
     var body: some View {
-        TabView{
-            Tab {
-                HomeScreen()
-            } label: {
-                Label("Início", image: "BirdHouseIcon")
+        
+        if usuarioLogado {
+            MainTabView()
+        } else {
+            LoginScreen(onLogin: {
+                usuarioLogado = true
             }
-            
-            Tab("Perfil", systemImage: "person.crop.circle.fill") {
-                UserProfileScreen()
-            }
+            )
         }
-        .tint(Color.principalYellow)
-        .navigationBarBackButtonHidden()
     }
 }
 
 #Preview {
     ContentView()
 }
+
+
