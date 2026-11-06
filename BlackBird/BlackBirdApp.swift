@@ -11,7 +11,7 @@ import SwiftUI
 struct BlackBirdApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginScreen()
+            ContentView()
         }
     }
 }
