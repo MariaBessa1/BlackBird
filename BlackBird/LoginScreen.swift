@@ -40,9 +40,9 @@ struct LoginScreen: View {
                             .foregroundStyle(.primary)
                         
                         TextField("Digite seu e-mail educacional", text: $email)
-                            .font(.custom("DMSans-Regular", size: 17, relativeTo: .body))
+                            .font(.custom("DMSans-Regular", size: 14, relativeTo: .body))
                             .padding(.horizontal, 16)
-                            .frame(height: 60)
+                            .frame(height: 40)
                             .background(
                                 RoundedRectangle(cornerRadius: 40)
                                     .foregroundStyle(.quinary)
@@ -57,9 +57,9 @@ struct LoginScreen: View {
                             .foregroundStyle(.primary)
                         
                         SecureField("Digite sua senha", text: $senha)
-                            .font(.custom("DMSans-Regular", size: 17, relativeTo: .body))
+                            .font(.custom("DMSans-Regular", size: 14, relativeTo: .body))
                             .padding(.horizontal, 16)
-                            .frame(height: 60)
+                            .frame(height: 40)
                             .background(
                                 RoundedRectangle(cornerRadius: 40)
                                     .foregroundStyle(.quinary)
@@ -67,20 +67,6 @@ struct LoginScreen: View {
                     }
                     
                     Spacer()
-                    
-                    //                    NavigationLink{
-                    //                        MainTabView()
-                    //                    } label: {
-                    //                        Text("Entrar")
-                    //                            .font(.custom ("DMSans-Bold", size: 16))
-                    //                            .foregroundStyle(.principalBlack)
-                    //                            .background(
-                    //                                RoundedRectangle(cornerRadius: 40)
-                    //                                    .foregroundStyle(.principalYellow)
-                    //                                    .frame(width: 200, height: 60)
-                    //                            )
-                    //                    }
-                    //                    .padding(24)
                     
                     Button {
                         onLogin()
@@ -91,7 +77,7 @@ struct LoginScreen: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 40)
                                     .foregroundStyle(.principalYellow)
-                                    .frame(width: 200, height: 60)
+                                    .frame(width: 200, height: 40)
                             )
                     }
                     .padding(24)

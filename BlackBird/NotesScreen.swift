@@ -71,6 +71,7 @@ struct NotesScreen: View {
 }
 
 
+
 #Preview {
     NotesScreen()
 }

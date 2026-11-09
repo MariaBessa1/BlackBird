@@ -34,6 +34,19 @@
             "Model/TimelineState.swift",
             "ViewModel/DemoTimeline.swift",
           ],
+        }, {
+          "target": "BlackBirdClip",
+          "inclusions": [
+            "Components/CardDetalhesNotas.swift",
+            "Components/CardMedia.swift",
+            "Fonte/BonaNovaSC-Regular.ttf",
+            "Fonte/DMSans-Regular.ttf",
+            "Fonte/DMSans-SemiBold.ttf",
+            "LoginScreen.swift",
+            "Model/AtividadeNota.swift",
+            "Model/MateriaNota.swift",
+            "NotasDetalhesScreen.swift",
+          ],
         },
       ],
     }, {
@@ -57,6 +70,20 @@
         },
       ],
     }, {
+      "kind": "folder",
+      "path": "BlackBirdClip",
+      "target-membership": [
+        "BlackBirdClip",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "BlackBirdClip",
+          "exclusions": [
+            "Info.plist",
+          ],
+        },
+      ],
+    }, {
       "kind": "group",
       "name": "Frameworks",
       "children": [
@@ -69,6 +96,7 @@
       "children": [
         { "path": "<PRODUCTS>/BlackBird.app", "id": "45C9AC90309B7C9000BF01CF", "type": "wrapper.application", "index": false },
         { "path": "<PRODUCTS>/BlackBirdWidgetExtension.appex", "id": "45C9AD00309CFDBA00BF01CF", "type": "wrapper.app-extension", "index": false, "target-membership": [ { "build-phase": "BlackBird/copy/Embed Foundation Extensions", "header-preservation": "remove-on-copy" } ] },
+        { "path": "<PRODUCTS>/BlackBirdClip.app", "id": "BA8B9F57309E50080049AC58", "type": "wrapper.application", "index": false, "target-membership": [ { "build-phase": "BlackBird/copy/Embed App Clips", "header-preservation": "remove-on-copy" } ] },
       ],
     },
   ],
@@ -80,6 +108,7 @@
       "product-type": "application",
       "dependencies": [
         "BlackBirdWidgetExtension",
+        "BlackBirdClip",
       ],
       "build-phases": [
         "compile-sources",
@@ -89,6 +118,11 @@
           "kind": "copy",
           "name": "Embed Foundation Extensions",
           "bundle-base-path": "plugins-directory",
+        }, {
+          "kind": "copy",
+          "name": "Embed App Clips",
+          "bundle-base-path": "build-products-directory",
+          "relative-path": "$(CONTENTS_FOLDER_PATH)/AppClips",
         },
       ],
       "build-settings": {
@@ -97,7 +131,7 @@
         "CODE_SIGN_ENTITLEMENTS": "BlackBird/BlackBird.entitlements",
         "CODE_SIGN_STYLE": "Automatic",
         "CURRENT_PROJECT_VERSION": "1",
-        "DEVELOPMENT_TEAM": "22R33Q56Q6",
+        "DEVELOPMENT_TEAM": "RUFUJMXRJC",
         "ENABLE_PREVIEWS": "YES",
         "GENERATE_INFOPLIST_FILE": "YES",
         "INFOPLIST_FILE": "BlackBird/Info.plist",
@@ -157,6 +191,48 @@
         "SKIP_INSTALL": "YES",
         "STRING_CATALOG_GENERATE_SYMBOLS": "YES",
         "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_EMIT_LOC_STRINGS": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "5.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
+      },
+    }, {
+      "name": "BlackBirdClip",
+      "id": "BA8B9F56309E50080049AC58",
+      "product": "Products/BlackBirdClip.app",
+      "product-type": "application.on-demand-install-capable",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "build-settings": {
+        "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
+        "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
+        "CODE_SIGN_ENTITLEMENTS": "BlackBirdClip/BlackBirdClip.entitlements",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "1",
+        "DEVELOPMENT_TEAM": "RUFUJMXRJC",
+        "ENABLE_PREVIEWS": "YES",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "BlackBirdClip/Info.plist",
+        "INFOPLIST_KEY_CFBundleDisplayName": "BlackBird",
+        "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
+        "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
+        "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
+        "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone": "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
+        "IPHONEOS_DEPLOYMENT_TARGET": "27.0",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks",
+        ],
+        "MARKETING_VERSION": "1.0",
+        "PRODUCT_BUNDLE_IDENTIFIER": "Maria.BlackBird.Clip",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "STRING_CATALOG_GENERATE_SYMBOLS": "YES",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_DEFAULT_ACTOR_ISOLATION": "MainActor",
         "SWIFT_EMIT_LOC_STRINGS": "YES",
         "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
         "SWIFT_VERSION": "5.0",
@@ -230,5 +306,5 @@
     "VALIDATE_PRODUCT[config=Release]": "YES",
   },
   "last-upgrade": "27.2",
-  "last-swift-update": "27.2",
+  "last-swift-update": "27.0",
 }
