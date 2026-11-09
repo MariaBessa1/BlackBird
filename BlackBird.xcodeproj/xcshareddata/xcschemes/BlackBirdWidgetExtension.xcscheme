@@ -18,6 +18,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "45C9ACFF309CFDBA00BF01CF"
                BuildableName = "BlackBirdWidgetExtension.appex"
+               BlueprintName = "BlackBirdWidgetExtension"
                ReferencedContainer = "container:BlackBird.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -56,19 +57,28 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2"
       queueDebuggingEnabled = "No">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.springboard">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "45C9ACFF309CFDBA00BF01CF"
+            BuildableName = "BlackBirdWidgetExtension.appex"
+            ReferencedContainer = "container:BlackBird.xcodeproj">
+         </BuildableReference>
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45C9AC8F309B7C9000BF01CF"
             BuildableName = "BlackBird.app"
             ReferencedContainer = "container:BlackBird.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "_XCWidgetKind"
-            value = ""
+            value = "BlackBirdWidget"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable

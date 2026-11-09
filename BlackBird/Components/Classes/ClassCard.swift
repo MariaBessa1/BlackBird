@@ -41,6 +41,7 @@ struct ClassCard: View {
         .background (
             RoundedRectangle (cornerRadius: 30)
                 .foregroundStyle(cardColor)
+                .frame(minWidth: 260)
         )
     }
 }

@@ -10,17 +10,29 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var usuarioLogado = false
+    @State private var timelineWidget = false
+    
     
     var body: some View {
         
-        if usuarioLogado {
-            MainTabView()
-        } else {
-            LoginScreen(onLogin: {
-                usuarioLogado = true
+        Group {
+            if usuarioLogado {
+                MainTabView()
+            } else {
+                LoginScreen(onLogin: {
+                    usuarioLogado = true
+                }
+                )
             }
-            )
         }
+        .onOpenURL { url in
+
+           if url.scheme == "blackbird",
+              url.host == "cronograma" {
+
+               timelineWidget = true
+           }
+       }
     }
 }
 
