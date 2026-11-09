@@ -9,12 +9,8 @@ import SwiftUI
 import WidgetKit
 
 struct TimelineWidgets: View {
-    
-    let hour: String
-    let className: String
-    let teacherName: String
-    let roomName: String
-    let colorClass: Color
+  
+    let timeline: TimelineState
     
     @Environment(\.widgetRenderingMode)
     private var renderingMode
@@ -30,43 +26,47 @@ var body: some View {
             Text("Próxima Aula:")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
-            Text(className)
-                .font(.headline)
-                .fontWeight(.semibold)
-                .minimumScaleFactor(0.8)
             
-            Text(teacherName)
-                .font(.caption)
-                .fontWeight(.medium)
-                .minimumScaleFactor(0.8)
-                .foregroundStyle(.secondary)
-            
-            ZStack {
-                Circle()
-                    .fill(colorClass)
-                    .opacity(renderingMode == .fullColor ? 1 : 0.25)
-
-                Text(roomName)
-                    .font(.subheadline)
-                    .foregroundStyle(
-                        renderingMode == .fullColor
+            if let lesson = timeline.nextClass {
+                
+                Text(lesson.className)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .minimumScaleFactor(0.8)
+                
+                Text(lesson.teacherName)
+                    .font(.caption)
+                    .fontWeight(.medium)
+                    .minimumScaleFactor(0.8)
+                    .foregroundStyle(.secondary)
+                
+                ZStack {
+                    Circle()
+                        .fill(lesson.classColor)
+                        .opacity(renderingMode == .fullColor ? 1 : 0.25)
+                    
+                    Text(lesson.roomName)
+                        .font(.subheadline)
+                        .foregroundStyle(
+                            renderingMode == .fullColor
                             ? Color.black
                             : Color.primary
-                    )
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-            }
-            .frame(
-                width: size * 0.30,
-                height: size * 0.30
-            )
-            .padding(.top, 15)
-            
-            HStack {
-    
-                Spacer()
+                        )
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                }
+                .frame(
+                    width: size * 0.30,
+                    height: size * 0.30
+                )
+                .padding(.top, 15)
                 
-                Image(.feather)
+                HStack {
+                    
+                    Spacer()
+                    
+                    Image(.feather)
+                }
             }
         }
         .frame(
@@ -79,71 +79,212 @@ var body: some View {
 }
 
 struct TimelineMedium: View {
+    let timeline: TimelineState
+    
     var body: some View {
-        VStack {
-            
-            HStack {
-                Text("Cronograma")
-                    .fontWeight(.bold)
-                    .font(.caption)
-                
-                Spacer()
-                
-                Image(.feather)
-            }
-            
-            Spacer(minLength: 20)
-            
-            Classes(hour: "17h01", className: "Projeto Integrador", teacherName: "Thiago Claro", roomName: "f278", colorClass: .blueClassCard)
-            
-            Classes(hour: "17h01", className: "Projeto Integrador", teacherName: "Thiago Claro", roomName: "f278", colorClass: .blueClassCard)
-            
-        }
+        VStack(alignment: .leading, spacing: 8) {
+
+           HStack {
+               Text("Cronograma")
+                   .fontWeight(.bold)
+                   .font(.caption)
+
+               Spacer()
+
+               Image(.feather)
+           }
+
+           Spacer(minLength: 4)
+
+            ForEach(
+                Array(
+                    timeline.classes
+                        .dropFirst(timeline.completedCount)
+                        .prefix(2)
+                )
+            ) { lesson in //pega só as duas primeiras matérias e vai tirando a primeira
+               Classes(
+                   hour: lesson.time,
+                   className: lesson.className,
+                   teacherName: lesson.teacherName,
+                   roomName: lesson.roomName,
+                   colorClass: lesson.classColor
+               )
+           }
+       }
       
     }
 }
 
 struct TimelineLarge: View {
+
+    let timeline: TimelineState
+
     var body: some View {
-        
-        VStack {
-            
+
+        VStack(alignment: .leading, spacing: 8) {
+
             HStack {
+
                 Text("Cronograma")
                     .fontWeight(.bold)
-                    .font(.caption)
-                
+                    .font(.footnote)
+
+
                 Spacer()
-                
+
                 Image(.feather)
             }
             
-            Spacer(minLength: 20)
-            
-            
-            Classes(hour: "17h01", className: "Projeto Integrador", teacherName: "Thiago Claro", roomName: "f278", colorClass: .blueClassCard)
-            
-            Classes(hour: "17h01", className: "Projeto Integrador", teacherName: "Thiago Claro", roomName: "f278", colorClass: .blueClassCard)
-            
-            Classes(hour: "17h01", className: "Projeto Integrador", teacherName: "Thiago Claro", roomName: "f278", colorClass: .blueClassCard)
-            
-            Classes(hour: "17h01", className: "Projeto Integrador", teacherName: "Thiago Claro", roomName: "f278", colorClass: .blueClassCard)
-            
+            Spacer()
+
+            GeometryReader { geometry in
+
+                let rowHeight = geometry.size.height / CGFloat(max(timeline.classes.count, 1))
+
+                let lineHeight = max(0,
+                    geometry.size.height - rowHeight
+                )
+
+                let progress = timeline.classes.count > 1
+                    ? Double(
+                        min(timeline.completedCount, timeline.classes.count - 1
+                        )
+                    ) / Double(timeline.classes.count - 1): 0.0
+
+                ZStack(alignment: .topLeading) {
+
+                    ZStack(alignment: .top) {
+
+                        Rectangle()
+                            .fill(Color.secondary.opacity(0.5))
+                            .frame(width: 2, height: lineHeight)
+
+                        Rectangle()
+                            .fill(Color.principalYellow)
+                            .frame(width: 2, height: lineHeight * progress
+                            )
+                    }
+                    .offset(x: 5, y: rowHeight / 2)
+
+                    VStack(spacing: 0) {
+
+                        ForEach(
+                            Array(timeline.classes.enumerated()),
+                            id: \.element.id
+                        ) { index, lesson in
+
+                            HStack(spacing: 8) {
+
+                                Circle()
+                                    .fill(index < timeline.completedCount
+                                            ? lesson.classColor
+                                            : index == timeline.completedCount
+                                                ? lesson.classColor.opacity(0.5)
+                                                : Color.secondary
+                                    )
+                                    .frame(width: 12, height: 12)
+
+                                Classes(
+                                    hour: lesson.time,
+                                    className: lesson.className,
+                                    teacherName: lesson.teacherName,
+                                    roomName: lesson.roomName,
+                                    colorClass: lesson.classColor
+                                )
+                                .opacity(index < timeline.completedCount ? 0.5 : 1)
+                                .frame(maxWidth: .infinity)
+                            }
+                            .frame(height: rowHeight)
+                        }
+                    }
+                }
+            }
         }
-      
     }
 }
 
+struct TimelineLargeLarge: View {
+    let timeline: TimelineState
+    
+    var body: some View {
+        
+        VStack(alignment: .leading, spacing: 8) {
 
-#Preview {
-    TimelineWidgets(hour: "17h01", className: "Projeto Integrador", teacherName: "Thiago Claro", roomName: "f278", colorClass: .blueClassCard)
+            HStack {
+
+                Text("Cronograma")
+                    .fontWeight(.bold)
+                    .font(.footnote)
+
+                Spacer()
+
+                Image(.feather)
+            }
+
+            Spacer()
+            
+            GeometryReader { geometry in
+
+                let rowHeight = geometry.size.height / CGFloat(max(timeline.classes.count, 1))
+
+                let lineHeight = max(0, geometry.size.height - rowHeight)
+
+                let progress = timeline.classes.count > 1
+                    ? Double(
+                        min(timeline.completedCount, timeline.classes.count - 1
+                        )
+                    ) / Double(timeline.classes.count - 1): 0.0
+
+                ZStack(alignment: .topLeading) {
+
+                    ZStack(alignment: .top) {
+
+                        Rectangle()
+                            .fill(Color.secondary.opacity(0.5))
+                            .frame(width: 2, height: lineHeight)
+
+                        Rectangle()
+                            .fill(Color.principalYellow)
+                            .frame(width: 2, height: lineHeight * progress
+                            )
+                    }
+                    .offset(x: 5, y: rowHeight / 2)
+
+                    VStack(spacing: 0) {
+
+                        ForEach(
+                            Array(timeline.classes.enumerated()),
+                            id: \.element.id
+                        ) { index, lesson in
+
+                            HStack(spacing: 8) {
+
+                                Circle()
+                                    .fill(index < timeline.completedCount
+                                            ? lesson.classColor
+                                            : index == timeline.completedCount
+                                                ? lesson.classColor.opacity(0.5)
+                                                : Color.secondary
+                                    )
+                                    .frame(width: 12, height: 12)
+
+                                Classes(
+                                    hour: lesson.time,
+                                    className: lesson.className,
+                                    teacherName: lesson.teacherName,
+                                    roomName: lesson.roomName,
+                                    colorClass: lesson.classColor
+                                )
+                                .opacity(index < timeline.completedCount ? 0.5 : 1)
+                                .frame(maxWidth: .infinity)
+                            }
+                            .frame(height: rowHeight)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-
-#Preview {
-    TimelineMedium()
-}
-
-#Preview {
-    TimelineLarge()
-}

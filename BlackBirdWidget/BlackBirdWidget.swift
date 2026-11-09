@@ -9,38 +9,96 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: TimelineProvider {
+    
+    private let service = DemoTimeline(
+        days: DemoTimelineDays.days
+    )
+    
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+        let now = Date()
+        
+        return SimpleEntry(
+            date: now,
+            timeline: service.state(
+                at: now,
+                startedAt: now
+            )
+        )
     }
+    
+    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+        let now = Date()
+        let startDate =
+            TimelineSimulationTime.startDate ?? now
 
-    func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
+        let entry = SimpleEntry(
+            date: now,
+            timeline: service.state(
+                at: now,
+                startedAt: startDate
+            )
+        )
+
         completion(entry)
     }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+        
+        let now = Date()
+        let startDate = TimelineSimulationTime.startDate ?? now
+     
         var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
-            entries.append(entry)
+        
+        let elapsed = max(
+            0,
+            now.timeIntervalSince(startDate)
+        )
+        
+        let nextStep =
+        Int(elapsed / service.interval) + 1
+        
+        // Estado atual
+        entries.append(
+            SimpleEntry(
+                date: now,
+                timeline: service.state(
+                    at: now,
+                    startedAt: startDate
+                )
+            )
+        )
+        
+        // Próximos estados da simulação
+        for step in nextStep..<(nextStep + 40) {
+            
+            let entryDate = startDate.addingTimeInterval(
+                Double(step) * service.interval
+            )
+            
+            entries.append(
+                SimpleEntry(
+                    date: entryDate,
+                    timeline: service.state(
+                        at: entryDate,
+                        startedAt: startDate
+                    )
+                )
+            )
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+        
+        completion(
+            Timeline(
+                entries: entries,
+                policy: .atEnd
+            )
+        )
+        
     }
-
-//    func relevances() async -> WidgetRelevances<Void> {
-//        // Generate a list containing the contexts this widget is relevant in.
-//    }
 }
-
+    
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let emoji: String
+    let timeline: TimelineState
 }
 
 struct BlackBirdWidgetEntryView : View {
@@ -48,31 +106,47 @@ struct BlackBirdWidgetEntryView : View {
     @Environment(\.widgetFamily) var family
     
     var entry: Provider.Entry
-
+    
     var body: some View {
-        switch family {
-        case .systemSmall:
-            
-            TimelineWidgets(hour: "17h01", className: "Projeto Integrador", teacherName: "Thiago Claro", roomName: "f278", colorClass: .blueClassCard)
-            
-        case .systemMedium:
-            
-            TimelineMedium()
-
-        case .systemLarge:
-            
-            TimelineLarge()
-            
-        default:
-            Text("Widget")
-            
+        
+        Group {
+            switch family {
+                
+            case .systemSmall:
+                TimelineWidgets(
+                    timeline: entry.timeline
+                )
+                
+            case .systemMedium:
+                TimelineMedium(
+                    timeline: entry.timeline
+                )
+                
+            case .systemLarge:
+                TimelineLarge(
+                    timeline: entry.timeline
+                )
+                
+            case .systemExtraLargePortrait:
+                TimelineLargeLarge(
+                    timeline: entry.timeline
+                )
+                
+            default:
+                TimelineMedium(
+                    timeline: entry.timeline
+                )
+            }
         }
+        .widgetURL(
+            URL(string: "blackbird://cronograma")
+        )
     }
 }
 
 struct BlackBirdWidget: Widget {
     let kind: String = "BlackBirdWidget"
-
+    
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             if #available(iOS 17.0, *) {
@@ -84,14 +158,63 @@ struct BlackBirdWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Cronograma")
+        .description("Acompanhe suas próximas aulas.")
+        .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .systemLarge,
+            .systemExtraLargePortrait
+        ])
     }
 }
 
 #Preview(as: .systemSmall) {
     BlackBirdWidget()
 } timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+    
+    SimpleEntry(
+        date: .now,
+        timeline: TimelineState(
+            dayIndex: 0,
+            completedCount: 0,
+            classes: DemoTimelineDays.days[0]
+        )
+    )
+    
+    SimpleEntry(
+        date: .now.addingTimeInterval(30),
+        timeline: TimelineState(
+            dayIndex: 0,
+            completedCount: 1,
+            classes: DemoTimelineDays.days[0]
+        )
+    )
+    
+    SimpleEntry(
+        date: .now.addingTimeInterval(60),
+        timeline: TimelineState(
+            dayIndex: 0,
+            completedCount: 2,
+            classes: DemoTimelineDays.days[0]
+        )
+    )
+    
+    SimpleEntry(
+        date: .now.addingTimeInterval(90),
+        timeline: TimelineState(
+            dayIndex: 0,
+            completedCount: 3,
+            classes: DemoTimelineDays.days[0]
+        )
+    )
+    
+    SimpleEntry(
+        date: .now.addingTimeInterval(120),
+        timeline: TimelineState(
+            dayIndex: 1,
+            completedCount: 0,
+            classes: DemoTimelineDays.days[1]
+        )
+    )
 }
