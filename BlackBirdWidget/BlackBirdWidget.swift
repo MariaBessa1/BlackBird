@@ -10,9 +10,7 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     
-    private let service = DemoTimeline(
-        days: DemoTimelineDays.days
-    )
+    private let service = DemoTimeline(days: DemoTimelineDays.days)
     
     func placeholder(in context: Context) -> SimpleEntry {
         let now = Date()
@@ -20,8 +18,8 @@ struct Provider: TimelineProvider {
         return SimpleEntry(
             date: now,
             timeline: service.state(
-                at: now,
-                startedAt: now
+            at: now,
+            startedAt: now
             )
         )
     }
@@ -49,13 +47,9 @@ struct Provider: TimelineProvider {
      
         var entries: [SimpleEntry] = []
         
-        let elapsed = max(
-            0,
-            now.timeIntervalSince(startDate)
-        )
+        let elapsed = max(0, now.timeIntervalSince(startDate))
         
-        let nextStep =
-        Int(elapsed / service.interval) + 1
+        let nextStep = Int(elapsed / service.interval) + 1
         
         // Estado atual
         entries.append(
@@ -133,7 +127,7 @@ struct BlackBirdWidgetEntryView : View {
                 )
                 
             default:
-                TimelineMedium(
+                TimelineWidgets(
                     timeline: entry.timeline
                 )
             }

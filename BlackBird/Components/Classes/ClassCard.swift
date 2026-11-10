@@ -30,6 +30,8 @@ struct ClassCard: View {
             }
             .padding(20)
             
+            Spacer()
+            
             VStack {
                 Spacer()
                 Text(roomName)

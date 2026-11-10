@@ -112,7 +112,7 @@ struct DemoTimelineDays {
                 className: "Cálculo II",
                 teacherName: "Ettore",
                 roomName: "a213",
-                classColor: .yellowClassCard
+                classColor: .purpleClassCard
             ),
         ],
         
@@ -147,7 +147,7 @@ struct DemoTimelineDays {
                 className: "Projeto Integrador",
                 teacherName: "Thiago Claro",
                 roomName: "f278",
-                classColor: .redClassCard
+                classColor: .purpleClassCard
             ),
         ],
         

@@ -20,6 +20,7 @@ var body: some View {
         
     GeometryReader { geometry in
         let size = geometry.size.width
+
         
         VStack (spacing: 5) {
             
@@ -74,7 +75,7 @@ var body: some View {
                 height: geometry.size.height,
                 alignment: .center
             )
-    }
+        }
     }
 }
 
@@ -142,9 +143,7 @@ struct TimelineLarge: View {
 
                 let rowHeight = geometry.size.height / CGFloat(max(timeline.classes.count, 1))
 
-                let lineHeight = max(0,
-                    geometry.size.height - rowHeight
-                )
+                let lineHeight = max(0, geometry.size.height - rowHeight)
 
                 let progress = timeline.classes.count > 1
                     ? Double(
@@ -195,7 +194,6 @@ struct TimelineLarge: View {
                                 .opacity(index < timeline.completedCount ? 0.5 : 1)
                                 .frame(maxWidth: .infinity)
                             }
-                            .frame(height: rowHeight)
                         }
                     }
                 }
@@ -279,7 +277,7 @@ struct TimelineLargeLarge: View {
                                 .opacity(index < timeline.completedCount ? 0.5 : 1)
                                 .frame(maxWidth: .infinity)
                             }
-                            .frame(height: rowHeight)
+                        
                         }
                     }
                 }
