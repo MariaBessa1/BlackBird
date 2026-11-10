@@ -17,24 +17,17 @@ struct Provider: TimelineProvider {
         
         return SimpleEntry(
             date: now,
-            timeline: service.state(
-            at: now,
-            startedAt: now
-            )
+            timeline: service.state(at: now, startedAt: now)
         )
     }
     
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
         let now = Date()
-        let startDate =
-            TimelineSimulationTime.startDate ?? now
+        let startDate = TimelineSimulationTime.startDate ?? now
 
         let entry = SimpleEntry(
             date: now,
-            timeline: service.state(
-                at: now,
-                startedAt: startDate
-            )
+            timeline: service.state(at: now, startedAt: startDate)
         )
 
         completion(entry)

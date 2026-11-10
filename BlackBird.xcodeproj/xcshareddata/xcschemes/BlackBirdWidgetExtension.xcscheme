@@ -64,6 +64,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "45C9ACFF309CFDBA00BF01CF"
             BuildableName = "BlackBirdWidgetExtension.appex"
+            BlueprintName = "BlackBirdWidgetExtension"
             ReferencedContainer = "container:BlackBird.xcodeproj">
          </BuildableReference>
       </RemoteRunnable>
